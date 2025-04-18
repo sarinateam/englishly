@@ -7,7 +7,7 @@ const ACTIONS = {
   IMPROVE: 'Improve Sentence',
   GRAMMAR: 'Correct Grammar',
   PROFESSIONAL: 'Make it Professional',
-  EMAIL: 'Draft an Email from this'
+  EMAIL: 'Draft an Email'
 };
 
 // --- Popup Creation Functions ---
@@ -30,7 +30,6 @@ function createActionPopup() {
 
 function createResultPopup(originalText, improvedText, storedSelectionInfo) {
 
- console.log('createResultPopup called with storedSelectionInfo:', storedSelectionInfo);
   // Remove existing popup and overlay if they exist
   hideResultPopup();
 
@@ -68,14 +67,12 @@ function createResultPopup(originalText, improvedText, storedSelectionInfo) {
   const copyButton = resultPopup.querySelector('.copy-button');
   const closeButton = resultPopup.querySelector('.close-button');
 
-  console.log('createResultPopup called with storedSelectionInfo before handle replace click:', currentSelectionInfo);
   replaceButton.addEventListener('click', () => handleReplaceClick(currentSelectionInfo, improvedText)); 
 
   // Add listener for Copy button
   copyButton.addEventListener('click', () => {
     navigator.clipboard.writeText(improvedText)
       .then(() => {
-        console.log('Text copied to clipboard');
         copyButton.textContent = 'Copied!'; // Provide feedback
         setTimeout(() => {
           copyButton.textContent = 'Copy';
@@ -130,8 +127,6 @@ function handleMouseUp(event) {
           value: target.value,
           range: selection.getRangeAt(0).cloneRange()
         };
-
-        console.log('Stored Selection Info:', storedSelectionInfo);
         
         showActionPopup(selection);
       }
@@ -141,8 +136,6 @@ function handleMouseUp(event) {
 
 async function handleActionClick(action) {
   if (!storedSelectionInfo) return;
-
-  console.log('handleActionClick called with action:', storedSelectionInfo);
 
   const originalText = storedSelectionInfo.selectedText;
   hideActionPopup();
@@ -169,7 +162,6 @@ async function handleActionClick(action) {
       loadingPopup.remove();
       
       if (response && response.success) {
-        console.log('handleActionClick called with response INSIDEEEEEEEEEE====:', currentSelectionInfos);
         showResultPopup(originalText, response.data, currentSelectionInfos);
       } else {
         const errorMessage = response && response.error ? response.error : 'An unknown error occurred';
@@ -199,9 +191,6 @@ async function handleActionClick(action) {
 }
 
 function handleReplaceClick(selectionInfo, newText) {
-  console.log('handleReplaceClick called with text-based replacement logic');
-  console.log('New Text:', newText);
-  console.log('Using Selection Info:', selectionInfo);
   
   if (!selectionInfo || !selectionInfo.targetElement) {
     console.error('Missing target element info for replacement.');
@@ -215,7 +204,6 @@ function handleReplaceClick(selectionInfo, newText) {
 
   try {
     if (targetElement.isContentEditable) {
-      console.log('Attempting replacement in contentEditable');
       // For contentEditable, finding and replacing text reliably without breaking
       // HTML can be complex. Let's try a simple textContent approach first.
       // A more robust solution might involve traversing the DOM within the range.
@@ -225,7 +213,6 @@ function handleReplaceClick(selectionInfo, newText) {
       if (index !== -1) {
         // Simple replacement - might break structure if originalText spans tags.
         targetElement.innerHTML = currentContent.substring(0, index) + newText + currentContent.substring(index + originalText.length);
-        console.log('Simple innerHTML replacement successful (contentEditable).');
         success = true;
       } else {
           // Fallback: Try using the range if available (less reliable after delay)
@@ -235,7 +222,6 @@ function handleReplaceClick(selectionInfo, newText) {
             selection.addRange(selectionInfo.range);
             if (document.queryCommandSupported('insertText')) {
                 document.execCommand('insertText', false, newText);
-                console.log('Fallback execCommand replacement successful (contentEditable).');
                 success = true;
             } else {
                  console.warn('Fallback execCommand failed: insertText not supported or range invalid.');
@@ -250,7 +236,6 @@ function handleReplaceClick(selectionInfo, newText) {
       }
     } 
     else if (targetElement.nodeName === 'TEXTAREA' || targetElement.nodeName === 'INPUT') {
-      console.log('Attempting replacement in input/textarea');
       const currentValue = targetElement.value;
       const index = currentValue.indexOf(originalText);
 
@@ -264,7 +249,6 @@ function handleReplaceClick(selectionInfo, newText) {
         // Manually dispatch events as setRangeText might not do it consistently
         targetElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
         targetElement.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
-        console.log('Text replacement successful (input/textarea).');
         success = true;
       } else {
         console.error('Could not find original text in input/textarea value:', originalText);
@@ -305,7 +289,6 @@ function showActionPopup(selection) {
 }
 
 function showResultPopup(originalText, improvedText, storedSelectionInfo) {
-    console.log('showResultPopup called with storedSelectionInfo:', storedSelectionInfo);
   createResultPopup(originalText, improvedText, storedSelectionInfo);
   
   // Show overlay and popup
@@ -358,5 +341,3 @@ function escapeHtml(unsafe) {
 
 document.addEventListener('mouseup', handleMouseUp);
 document.addEventListener('mousedown', handleClickOutside); // Use mousedown to catch clicks before mouseup potentially triggers a new selection
-
-console.log("Textly AI content script loaded."); 
