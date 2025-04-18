@@ -1,0 +1,209 @@
+.englishly-popup {
+  position: absolute;
+  z-index: 10000;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  min-width: 300px;
+  font-family: Arial, sans-serif;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  border: 2px solid #4CAF50;
+  cursor: move;
+  user-select: none;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.englishly-popup.englishly-minimized {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: scale(0.9);
+}
+
+.englishly-popup.englishly-dragging {
+  opacity: 0.9;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.englishly-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  cursor: move;
+}
+
+.englishly-popup-title {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.englishly-popup-controls {
+  display: flex;
+  gap: 5px;
+}
+
+.englishly-minimize-btn,
+.englishly-close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.englishly-minimize-btn:hover,
+.englishly-close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.englishly-popup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+}
+
+.englishly-popup h4 {
+  margin: 0 0 8px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.englishly-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.englishly-option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.englishly-tone-buttons,
+.englishly-action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.englishly-tone-buttons button,
+.englishly-action-buttons button {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 13px;
+  flex: 1;
+  min-width: 80px;
+}
+
+.englishly-tone-buttons button:hover,
+.englishly-action-buttons button:hover {
+  background: #f5f5f5;
+}
+
+.englishly-tone-buttons button.selected,
+.englishly-action-buttons button.selected {
+  background: #4CAF50;
+  color: white;
+  border-color: #4CAF50;
+}
+
+.englishly-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.englishly-actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  flex: 1;
+}
+
+.englishly-enhance {
+  background: #4CAF50;
+  color: white;
+}
+
+.englishly-enhance:hover {
+  background: #45a049;
+}
+
+.englishly-cancel {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.englishly-cancel:hover {
+  background: #e0e0e0;
+}
+
+/* Floating Icon Styles */
+.englishly-floating-icon {
+  position: fixed;
+  z-index: 9999;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: move;
+  transition: transform 0.2s, box-shadow 0.2s;
+  user-select: none;
+}
+
+.englishly-floating-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.englishly-floating-icon.englishly-dragging {
+  opacity: 0.9;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Notification Styles */
+.englishly-notification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 10001;
+  font-size: 14px;
+  transition: opacity 0.5s;
+}
+
+.englishly-notification-fade {
+  opacity: 0;
+} 
